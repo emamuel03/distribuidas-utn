@@ -20,8 +20,11 @@ namespace WindowsFormsApplication1
 
         Producto p = new Producto();
         Controlador controlador = new Controlador();
-        public static int id;
+        
         VModificarProducto vmp = new VModificarProducto();
+        // variable id para pasarle al VModificarProducto que se
+        // utiliza el metodo cargarCampos()
+        public static int id;
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -91,6 +94,16 @@ namespace WindowsFormsApplication1
             // TODO: This line of code loads data into the 'database1DataSet1.categoria' table. You can move, or remove it, as needed.
             this.categoriaTableAdapter.Fill(this.database1DataSet1.categoria);
             actualizarTabla();
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // seleccionar un producto desde la tabla
+
+            int i = dataGridView1.CurrentRow.Index;
+
+            txtIdProducto.Text = dataGridView1[0, i].Value.ToString();
+            txtNombre.Text = dataGridView1[1, i].Value.ToString();
         }
     }
 }
