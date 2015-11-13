@@ -19,6 +19,7 @@ namespace WindowsFormsApplication1
 
         Producto p = new Producto();
         Controlador ctr = new Controlador();
+        
 
         public void cargarCampos()
         {
@@ -33,12 +34,15 @@ namespace WindowsFormsApplication1
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
+            
             p.Nombre = txtNombre.Text;
             p.Precio = double.Parse(txtPrecio.Text);
             p.Stock = int.Parse(txtStock.Text);
             p.IdCategoria = Convert.ToInt16(comboCategoria.SelectedValue);
 
-            ctr.modificarProducto(VentanaProducto.id, p);
+            //paso como parametros el id del producto y el objeto producto con sus modificaciones
+            ctr.modificarProducto(int.Parse(txtIdProducto.Text), p);
+            
             cerrarVentana();
         }
 

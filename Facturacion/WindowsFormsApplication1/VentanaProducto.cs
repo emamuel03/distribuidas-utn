@@ -22,8 +22,9 @@ namespace WindowsFormsApplication1
         Controlador controlador = new Controlador();
         
         VModificarProducto vmp = new VModificarProducto();
-        // variable id para pasarle al VModificarProducto que se
-        // utiliza el metodo cargarCampos()
+
+        //inicio un varable estatica 
+        //para pasarle como parametro al metodo cargarCampos()
         public static int id;
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -31,7 +32,6 @@ namespace WindowsFormsApplication1
             p.Nombre = txtNombre.Text;
             p.Precio = double.Parse(txtPrecio.Text);
             p.Stock = int.Parse(txtStock.Text);
-           // MessageBox.Show(comboCategoria.SelectedValue.ToString());
             p.IdCategoria = Convert.ToInt16(comboCategoria.SelectedValue);
 
             controlador.altaProducto(p);
@@ -42,11 +42,7 @@ namespace WindowsFormsApplication1
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            id = int.Parse(txtIdProducto.Text);
-            vmp.cargarCampos();
-            vmp.Show();
-            ControladorVentanas.ocultarVentanas();
-            actualizarTabla();
+            modificarProducto();
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -70,6 +66,7 @@ namespace WindowsFormsApplication1
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            limpiarCampos();
             ControladorVentanas.mostrarMenuPrincipal();
         }
 
@@ -85,8 +82,32 @@ namespace WindowsFormsApplication1
         {
             var adaptador = new productoTableAdapter();
             DataSet1 datos = new DataSet1();
-            adaptador.Fill(datos.producto);
+
+            /* el metodo fillByProducto es un join creado en el data set
+            entre las tablas producto y categoria */
+            adaptador.FillByProducto(datos.producto);
             dataGridView1.DataSource = datos.producto;
+
+        }
+
+        public void modificarProducto()
+        {
+            id = int.Parse(txtIdProducto.Text);
+            controlador.buscarProducto(id, p);
+
+            // si el producto existe en la tabla el Id del producto es distinto de 0
+            
+            if (p.IdProducto != 0)
+            {
+                
+                vmp.cargarCampos();
+                vmp.Show();
+                ControladorVentanas.ocultarVentanas();
+
+                /*SE DEBE DE ESTA MANERA ABRIR LA VENTANA VModificarProducto 
+                PARA EVITAR VOLVER A INSTANCIAR LA CLASE VModificarProducto
+                Y PERDER EL PARAMETRO ID QUE LE ESTAMOS PASANDO*/
+            }
         }
 
         private void VentanaProducto_Load(object sender, EventArgs e)
@@ -94,16 +115,23 @@ namespace WindowsFormsApplication1
             // TODO: This line of code loads data into the 'database1DataSet1.categoria' table. You can move, or remove it, as needed.
             this.categoriaTableAdapter.Fill(this.database1DataSet1.categoria);
             actualizarTabla();
+
+            //CONFIGUARCION DEL Grid View
+            dataGridView1.Columns[0].HeaderText = "ID";
+            dataGridView1.Columns[1].HeaderText = "NOMBRE";
+            dataGridView1.Columns[2].HeaderText = "PRECIO UNITARIO";
+            dataGridView1.Columns[3].HeaderText = "STOCK";
+            //la columna 4 del GridView no se muestra
+            dataGridView1.Columns[4].Visible = false;
+            dataGridView1.Columns[5].HeaderText = "CATEGORIA";
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // seleccionar un producto desde la tabla
-
             int i = dataGridView1.CurrentRow.Index;
 
             txtIdProducto.Text = dataGridView1[0, i].Value.ToString();
-            txtNombre.Text = dataGridView1[1, i].Value.ToString();
         }
+
     }
 }

@@ -41,11 +41,11 @@
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.comboCategoria = new System.Windows.Forms.ComboBox();
-            this.database1DataSet2 = new WindowsFormsApplication1.Database1DataSet2();
             this.categoriaBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.database1DataSet2 = new WindowsFormsApplication1.Database1DataSet2();
             this.categoriaTableAdapter = new WindowsFormsApplication1.Database1DataSet2TableAdapters.categoriaTableAdapter();
-            ((System.ComponentModel.ISupportInitialize)(this.database1DataSet2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.categoriaBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.database1DataSet2)).BeginInit();
             this.SuspendLayout();
             // 
             // label4
@@ -109,10 +109,12 @@
             // 
             // txtIdProducto
             // 
+            this.txtIdProducto.Enabled = false;
             this.txtIdProducto.Location = new System.Drawing.Point(109, 52);
             this.txtIdProducto.Name = "txtIdProducto";
-            this.txtIdProducto.Size = new System.Drawing.Size(100, 20);
+            this.txtIdProducto.Size = new System.Drawing.Size(64, 20);
             this.txtIdProducto.TabIndex = 16;
+            this.txtIdProducto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label5
             // 
@@ -154,15 +156,15 @@
             this.comboCategoria.TabIndex = 20;
             this.comboCategoria.ValueMember = "id_categoria";
             // 
-            // database1DataSet2
-            // 
-            this.database1DataSet2.DataSetName = "Database1DataSet2";
-            this.database1DataSet2.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // categoriaBindingSource
             // 
             this.categoriaBindingSource.DataMember = "categoria";
             this.categoriaBindingSource.DataSource = this.database1DataSet2;
+            // 
+            // database1DataSet2
+            // 
+            this.database1DataSet2.DataSetName = "Database1DataSet2";
+            this.database1DataSet2.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // categoriaTableAdapter
             // 
@@ -188,8 +190,8 @@
             this.Name = "VModificarProducto";
             this.Text = "VModificarProducto";
             this.Load += new System.EventHandler(this.VModificarProducto_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.database1DataSet2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.categoriaBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.database1DataSet2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
